@@ -4,6 +4,7 @@
 .LSOverride
 node_modules
 package-lock.json
+.env
 
 
 # Icon must end with two \r
