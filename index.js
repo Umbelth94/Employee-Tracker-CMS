@@ -1,4 +1,5 @@
 require('dotenv').config({debug: true})
+
 console.log(process.env);
 
 console.log(`Hello ${process.env.SQL_PASS}`)
