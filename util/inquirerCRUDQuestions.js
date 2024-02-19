@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import db from '../lib/dbConnection.js';
-import { fetchDepartments, updateDepartmentsList, addDepartmentQuery, updateRolesList, updateManagersList } from './dbQueries.js';
+import { fetchDepartments, updateDepartmentsList, addDepartmentQuery, updateRolesList, updateManagersList, updateEmployeesList } from './dbQueries.js';
 export async function addDepartmentPrompt(){
     try { 
         const answers = await inquirer.prompt({
@@ -83,6 +83,33 @@ export async function addEmployeePrompt() {
         return answers;
     } catch (error) {
         console.error('Error in addEmployeePrompt:', error);
+        throw error;
+    }
+};
+
+export async function updateEmployeeRolePrompt() {
+    try {
+        // Fetch updated lists of employees and roles
+        const employeesList = await updateEmployeesList();
+        const rolesList = await updateRolesList();
+
+        const answers = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'employee_id',
+                message: 'Select the employee to update:',
+                choices: employeesList
+            },
+            {
+                type: 'list',
+                name: 'role_id',
+                message: 'Select the new role for the employee:',
+                choices: rolesList
+            }
+        ]);
+        return answers;
+    } catch (error) {
+        console.error('Error while updating employee:', error);
         throw error;
     }
 };

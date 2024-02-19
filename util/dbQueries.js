@@ -1,5 +1,5 @@
 import db from '../lib/dbConnection.js';
-import { addRolePrompt, addDepartmentPrompt, addEmployeePrompt } from './inquirerCRUDQuestions.js'
+import { addRolePrompt, addDepartmentPrompt, addEmployeePrompt, updateEmployeeRolePrompt } from './inquirerCRUDQuestions.js'
 
 //Add role to the database
 export async function addRoleQuery() { 
@@ -45,6 +45,27 @@ export async function addDepartmentQuery() {
         return results;
     } catch (error) {
         console.error('Error adding department:', error);
+        throw error;
+    }
+}
+
+export async function addEmployeeQuery() {
+    try {
+        const answers = await addEmployeePrompt();
+        const results = await new Promise((resolve, reject) => {
+            db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('${answers.first_name}', '${answers.last_name}', '${answers.role_id}', '${answers.manager_id}')`, function (err, results) {
+                if (err) {
+                    console.error('Error adding employee:', err);
+                    reject(err);
+                } else {
+                    console.log(`${answers.first_name} ${answers.last_name} added!`);
+                    resolve(results);
+                }
+            });
+        });
+        return results;
+    } catch (error) {
+        console.error('Error adding employee:', error);
         throw error;
     }
 }
@@ -146,23 +167,54 @@ export async function updateManagersList() {
             throw error;
         }};
 
-export async function addEmployeeQuery() {
+async function fetchEmployees(){
     try {
-        const answers = await addEmployeePrompt();
-        const results = await new Promise((resolve, reject) => {
-            db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('${answers.first_name}', '${answers.last_name}', '${answers.role_id}', '${answers.manager_id}')`, function (err, results) {
+        const employees = await new Promise((resolve, reject) => {
+            db.query('SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employees', (err, results) => {
                 if (err) {
-                    console.error('Error adding employee:', err);
                     reject(err);
                 } else {
-                    console.log(`${answers.first_name} ${answers.last_name} added!`);
+                    resolve(results);
+                }
+            });
+        });
+        return employees;
+    } catch (error) {
+        console.error('Error fetching employees:', error);
+        throw error;
+    }
+}
+
+export async function updateEmployeesList() {
+    try {
+        const fetchedEmployees = await fetchEmployees();
+        return fetchedEmployees.map(employee => ({
+            name: employee.name,
+            value: employee.id
+        }));
+    } catch (error) {
+        console.error('Error fetching departments:', error);
+        throw error;
+    }
+}
+
+export async function updateEmployeesRoleQuery() {
+    try {
+        const updatedEmployees = await updateEmployeeRolePrompt();
+        const results = await new Promise((resolve, reject) => {
+            db.query(`UPDATE employees SET role_id = '${role_id}' WHERE id = '${employee_id}'`, function (err, results) {
+                if (err) {
+                    console.error('Error updating employee role:', err);
+                    reject(err);
+                } else {
+                    console.log(`employee role updated!`);
                     resolve(results);
                 }
             });
         });
         return results;
     } catch (error) {
-        console.error('Error adding employee:', error);
+        console.error('Error updating employee role:', error);
         throw error;
     }
-}
+};
