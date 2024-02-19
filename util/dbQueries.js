@@ -1,4 +1,27 @@
 import db from '../lib/dbConnection.js';
+import { addRolePrompt, addDepartmentPrompt } from './inquirerCRUDQuestions.js'
+
+//Add department to the database
+export async function addDepartmentQuery() {
+    try {
+        const answers = await addDepartmentPrompt();
+        const results = await new Promise((resolve, reject) => {
+            db.query(`INSERT INTO departments (name) VALUES ('${answers.department}')`, function (err, results) {
+                if (err) {
+                    console.error('Error adding department:', err);
+                    reject(err);
+                } else {
+                    console.log(`${answers.department} Department added!`);
+                    resolve(results);
+                }
+            });
+        });
+        return results;
+    } catch (error) {
+        console.error('Error adding department:', error);
+        throw error;
+    }
+}
 
 //Fetch existing departments from the database
 export async function fetchDepartments() {
@@ -19,6 +42,8 @@ export async function fetchDepartments() {
     }
 }
 
+//Update departments and return an array of the departments
+//(Specifically for use with inquirer when displaying list of updated departments)
 export async function updateDepartmentsList() {
     try {
         const fetchedDepartments = await fetchDepartments();

@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import db from '../lib/dbConnection.js';
-import { fetchDepartments, updateDepartmentsList, } from './dbQueries.js';
+import { fetchDepartments, updateDepartmentsList, addDepartmentQuery } from './dbQueries.js';
 export async function addDepartmentPrompt(){
     try { 
         const answers = await inquirer.prompt({
