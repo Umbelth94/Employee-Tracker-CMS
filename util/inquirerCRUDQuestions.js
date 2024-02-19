@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import db from '../lib/dbConnection.js';
-import { fetchDepartments, updateDepartmentsList, addDepartmentQuery } from './dbQueries.js';
+import { fetchDepartments, updateDepartmentsList, addDepartmentQuery, updateRolesList, updateManagersList } from './dbQueries.js';
 export async function addDepartmentPrompt(){
     try { 
         const answers = await inquirer.prompt({
@@ -46,3 +46,43 @@ export async function addRolePrompt() {
         throw error;
     }
 }
+
+export async function addEmployeePrompt() {
+    try { 
+        //Prepare updated lists of roles and managers
+        const rolesList = await updateRolesList();
+        const managersList = await updateManagersList();
+
+        //Add an option for no manager
+        managersList.unshift({name: 'None', value: null}); 
+
+        const answers = await inquirer.prompt([
+            {
+                type:'input',
+                name:'first_name',
+                message:'What is the first name of the new employee?',
+            },
+            {
+                type:'input',
+                name:'last_name',
+                message:'What is the last name of the new employee?',
+            },
+            {
+                type:'list',
+                name:'role_id',
+                message:'Select the role for the new employee:',
+                choices: rolesList,
+            },
+            {
+                type:'list',
+                name:'manager_id',
+                message:'Select the manager for the new employee:',
+                choices: managersList
+            }
+        ]);
+        return answers;
+    } catch (error) {
+        console.error('Error in addEmployeePrompt:', error);
+        throw error;
+    }
+};
