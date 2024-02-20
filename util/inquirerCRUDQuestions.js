@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import db from '../lib/dbConnection.js';
-import { updateDepartmentsList, updateRolesList, updateManagersList, updateEmployeesList } from './dbQueries.js';
+import { updateDepartmentsList, updateRolesList, updateManagersList, updateEmployeesList } from './db-intermediate-Queries.js';
 
 // These are all the inquirer functions outside of the main menu options on the index.js file.  They are mostly just a collection of questions, but some of them pull in updated lists that are handled by the dbQueries.js file.  They are asynchronous because I was afraid to do ANYTHING synchronously in this project.  Inquirer gets real whacky when using synchronous functions alongside SQL queries.  
 

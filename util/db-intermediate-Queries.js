@@ -1,5 +1,4 @@
 import db from '../lib/dbConnection.js';
-import { updateEmployeeRolePrompt } from './inquirerCRUDQuestions.js'
 import { fetchDepartments, fetchRoles } from '../lib/readQueries.js';
 
 //Thees queries are all intermediate functions that manipulate queries before sending them elsewhere, which is why they are tucked away in this util folder.  
