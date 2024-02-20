@@ -100,23 +100,3 @@ export async function updateEmployeesList() {
     }
 }
 
-export async function updateEmployeesRoleQuery() {
-    try {
-        const updatedEmployees = await updateEmployeeRolePrompt();
-        const results = await new Promise((resolve, reject) => {
-            db.query(`UPDATE employees SET role_id = '${role_id}' WHERE id = '${employee_id}'`, function (err, results) {
-                if (err) {
-                    console.error('Error updating employee role:', err);
-                    reject(err);
-                } else {
-                    console.log(`employee role updated!`);
-                    resolve(results);
-                }
-            });
-        });
-        return results;
-    } catch (error) {
-        console.error('Error updating employee role:', error);
-        throw error;
-    }
-};

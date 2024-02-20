@@ -1,7 +1,8 @@
 import inquirer from 'inquirer';
-import contentFunctions from './lib/contentFunctions.js';
-import { fetchDepartments, } from './lib/readQueries.js';
-
+import 'dotenv/config'
+// import contentFunctions from './lib/contentFunctions.js';
+import { fetchDepartments, fetchRoles, fetchEmployees } from './lib/readQueries.js';
+import { addDepartmentQuery, addRoleQuery, addEmployeeQuery, updateEmployeesRoleQuery  } from './lib/createQueries.js';
 
 async function displayMainMenu() {
     //console.clear();
@@ -37,30 +38,33 @@ async function displayMainMenu() {
     async function processChoice(choice){
         switch (choice) {
             case 'View All Departments':
-                await fetchDepartments();
+                const depts = await fetchDepartments();
+                console.table(depts);
                 break;
             case 'View All Roles':
-                await contentFunctions.viewAllRoles();
+                const roles = await fetchRoles();
+                console.table(roles);
                 // Call function to view all roles
                 break;
             case 'View All Employees':
-                await contentFunctions.viewAllEmployees();
+                const emps = await fetchEmployees();
+                console.table(emps);
                 // Call function to view all employees
                 break;
             case 'Add A Department':
-                await contentFunctions.addDepartment();
+                await addDepartmentQuery();
                 // Call function to add a department
                 break;
             case 'Add A Role':
-                await contentFunctions.addRole();
+                await addRoleQuery();
                 // Call function to add a role
                 break;
             case 'Add An Employee':
-                await contentFunctions.addEmployee();
+                await addEmployeeQuery();
                 // Call function to add an employee
                 break;
             case 'Update An Employee Role':
-               await contentFunctions.updateEmployeeRole();
+               await updateEmployeesRoleQuery();
                 // Call function to update an employee role
                 break;
             case 'Exit':
