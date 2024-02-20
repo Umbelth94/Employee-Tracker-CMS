@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import db from '../lib/dbConnection.js';
-import { fetchDepartments, updateDepartmentsList, addDepartmentQuery, updateRolesList, updateManagersList, updateEmployeesList } from './dbQueries.js';
+import { updateDepartmentsList, updateRolesList, updateManagersList, updateEmployeesList } from './dbQueries.js';
 export async function addDepartmentPrompt(){
     try { 
         const answers = await inquirer.prompt({
@@ -8,7 +8,6 @@ export async function addDepartmentPrompt(){
             name:'department',
             message:'What is the name of the new department?',
         })
-
         return answers;
     } catch(error) {
         console.error('Error adding department', error);

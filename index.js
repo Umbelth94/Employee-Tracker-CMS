@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import contentFunctions from './lib/contentFunctions.js';
+import { fetchDepartments, } from './lib/readQueries.js';
 
 
 async function displayMainMenu() {
@@ -36,7 +37,7 @@ async function displayMainMenu() {
     async function processChoice(choice){
         switch (choice) {
             case 'View All Departments':
-                await contentFunctions.viewAllDepartments();
+                await fetchDepartments();
                 break;
             case 'View All Roles':
                 await contentFunctions.viewAllRoles();
