@@ -5,6 +5,10 @@
 A Content Management System that runs in the terminal to handle various database queries for a fake company.  This app was built as an excercise to learn more about MySQL and get even more experience with Inquirer.  I also got to work with asynchronous functionality which, admittedly, was a lot to wrap my head around.  I was basically forced to do it though, as MySQL and Inquirer don't play nice together without it.  I was also mindful about utilizing modulization whenever certain files got a little too large. This is a practice that I am only just now starting to get used to so I'm sure that I could have done a better job, but I'm proud of how it turned out and everything seems to work just fine, so I'll call that a success.  I learned a lot about MySQL queries, learned about hiding certain variables in a .env file, and ended up with what I THINK is a solid base understanding of asynchronous programming.  
 
 
+
+https://github.com/Umbelth94/Employee-Tracker-CMS/assets/71855947/79498897-26b9-42ed-8998-69dcedf75479
+
+
 ## Installation
 When you download this repo, the first thing you will need to do is run `npm install` in the terminal to grab all the required packages. 
 
