@@ -38,6 +38,7 @@ Add features to:
 * View employees by department
 * Delete departments, roles, and employees
 * View the total utilized budget of a department - in other words, the combined salaries of all employees in that department
+* Color Code the tables
 
 I am also planning to add some verification through Inquirer that will not allow users to input the wrong types of data.  
 

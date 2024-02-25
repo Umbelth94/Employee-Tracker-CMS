@@ -3,6 +3,7 @@ import 'dotenv/config'
 // import contentFunctions from './lib/contentFunctions.js';
 import { fetchDepartments, fetchRoles, fetchEmployees } from './lib/readQueries.js';
 import { addDepartmentQuery, addRoleQuery, addEmployeeQuery, updateEmployeesRoleQuery  } from './lib/createQueries.js';
+import { printTable, Table } from 'console-table-printer'
 
 async function displayMainMenu() {
     //console.clear();
@@ -39,16 +40,28 @@ async function displayMainMenu() {
         switch (choice) {
             case 'View All Departments':
                 const depts = await fetchDepartments();
-                console.table(depts);
+                // For future table aesthetics
+                // const p = new Table({
+                //     columns: [
+                //         {name: `id`, color:'yellow'},
+                //         {name: 'name', color:'green'},
+                //     ]
+                // });
+                // for (let i = 0; i < depts.length; i++){
+                //     //Add a modulo function to alternate colors
+                //     p.addRow({id: `${depts[i].id}`, name: `${depts[i].name}`})
+                // }
+                // p.printTable();
+                printTable(depts);
                 break;
             case 'View All Roles':
                 const roles = await fetchRoles();
-                console.table(roles);
+                printTable(roles);
                 // Call function to view all roles
                 break;
             case 'View All Employees':
                 const emps = await fetchEmployees();
-                console.table(emps);
+                printTable(emps);
                 // Call function to view all employees
                 break;
             case 'Add A Department':
